@@ -1,6 +1,10 @@
 // eslint-disable-next-line max-lines-per-function
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+      },
       displayName: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -17,10 +21,6 @@ module.exports = (sequelize, DataTypes) => {
       image: {
         type: DataTypes.STRING,
       },
-  }, {
-    timestamps: false, // remove a obrigatoriedade de utilizar os campos `createdAt` e `updatedAt`
-    tableName: 'User',
-    underscored: true,
   });
   return User;
 };
