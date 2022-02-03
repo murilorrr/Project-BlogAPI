@@ -1,30 +1,38 @@
 const Joi = require('joi');
 const errorHandler = require('../middlewares/errorHandler');
-const userModel = require('../models/user');
+const { User } = require('../models');
 
 const regexExp = /@/;
 
 const userSchema = Joi.object({
   displayName: Joi.string().min(8).required(),
-  email: Joi.string().min().regex(regexExp).required(),
+  email: Joi.string().regex(regexExp).required(),
   password: Joi.string().min(6).required(),
+  image: Joi.string(),
 });
 
-const alreadyExists = async (user) => {
-  const userAlreadyExists = await userModel.findOne({ where: { email: user.email } });
-
-  return userAlreadyExists || null;
+const alreadyExists = async (email) => {
+  try {
+    console.log(email, 'este é o email');
+    const user = await User.findOne({ where: { email } });
+    console.log('deu certo');
+    return user || null;
+  } catch (err) {
+    console.log('nao deu bom');
+  }
 };
 
 const createUser = async ({ displayName, password, email, image }) => {
-  const { error, user } = userSchema.validate({ displayName, password, email, image }); 
+  const { error } = userSchema.validate({ displayName, password, email, image }); 
   if (error) throw errorHandler(400, error.message);
 
-  const exists = await alreadyExists(user);
+  const exists = await alreadyExists(email);
   if (exists) throw errorHandler(300, 'User already registered');
 
-  const userCreated = await userModel.create(user);
-  return userCreated;
+  // const userCreated = await User.create(user);
+
+  const user = { displayName, password, email, image };
+  return user;
 };
 
 module.exports = {

@@ -1,6 +1,10 @@
-module.exports = (req, res, next, error) => {
+const { StatusCodes } = require('http-status-codes');
+
+module.exports = (_req, res, _next, error) => {
   if (error.status) {
+    console.log(error.message);
     return res.status(error.status).json({ message: error.message });
   }
-  res.status(500).json({ message: 'Internal server error' });
+  console.log(error);
+  return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: 'Internal server error' });
 };

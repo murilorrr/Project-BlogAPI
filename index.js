@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { statusCodes } = require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 const errorMiddleware = require('./middlewares/errorMiddleware');
 const userService = require('./services/user');
 
@@ -17,10 +17,10 @@ app.get('/', (request, response) => {
 app.post('/user', async (request, response, next) => {
   const user = request.body;
   try {
-    const result = await userService.create(user);
-    return response.status(statusCodes.CREATED).json(result);
+    const result = await userService.createUser(user);
+    return response.status(StatusCodes.CREATED).json(result);
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 
