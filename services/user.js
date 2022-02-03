@@ -12,14 +12,8 @@ const userSchema = Joi.object({
 });
 
 const alreadyExists = async (email) => {
-  try {
-    console.log(email, 'este é o email');
-    const user = await User.findOne({ where: { email } });
-    console.log('deu certo');
-    return user || null;
-  } catch (err) {
-    console.log('nao deu bom');
-  }
+  const user = await User.findOne({ where: { email } });
+  return user || null;
 };
 
 const createUser = async ({ displayName, password, email, image }) => {
@@ -29,10 +23,9 @@ const createUser = async ({ displayName, password, email, image }) => {
   const exists = await alreadyExists(email);
   if (exists) throw errorHandler(300, 'User already registered');
 
-  // const userCreated = await User.create(user);
+  const userCreated = await User.create({ displayName, password, email, image });
 
-  const user = { displayName, password, email, image };
-  return user;
+  return userCreated;
 };
 
 module.exports = {
