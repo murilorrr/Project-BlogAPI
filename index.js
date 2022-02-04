@@ -21,7 +21,6 @@ app.post('/user', async (req, res, next) => {
     const result = await userService.createUser(user);
     return res.status(StatusCodes.CREATED).json(result);
   } catch (error) {
-    console.log(error, 'error creating user');
     next(error);
   }
 });

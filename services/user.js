@@ -6,7 +6,7 @@ const regexExp = /@/;
 
 const userSchema = Joi.object({
   displayName: Joi.string().min(8).required(),
-  email: Joi.string().regex(regexExp).required(),
+  email: Joi.string().required().regex(regexExp).min(6),
   password: Joi.string().min(6).required(),
   image: Joi.string(),
 });
@@ -21,7 +21,7 @@ const createUser = async ({ displayName, password, email, image }) => {
   if (error) throw errorHandler(400, error.message);
 
   const exists = await alreadyExists(email);
-  if (exists) throw errorHandler(300, 'User already registered');
+  if (exists) throw errorHandler(400, 'User already registered');
 
   const userCreated = await User.create({ displayName, password, email, image });
 
