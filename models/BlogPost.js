@@ -7,9 +7,8 @@ module.exports = (sequelize, DataTypes) => {
     updated: DataTypes.DATE,
   },
   {
-    timestamps: false
-  }
-  );
+    timestamps: false,
+  });
 
   BlogPosts.associate = (models) => {
     BlogPosts.hasOne(models.User,
