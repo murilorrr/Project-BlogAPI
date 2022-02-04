@@ -11,6 +11,16 @@ const createUser = async (req, res, next) => {
   }
 };
 
+const getAll = async (req, res, next) => {
+  try {
+    const result = await userService.getAll();
+    return res.status(StatusCodes.OK).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   createUser,
+  getAll,
 };
