@@ -8,7 +8,7 @@ router.delete('/', (req, res) => {
 });
 
 router.get('/', (req, res) => {
-  res.status(404).json({ message: 'not implemented' });
+  res.status(200).json({ message: 'not implemented' });
 });
 
 router.post('/', createUser);

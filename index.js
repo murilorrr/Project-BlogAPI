@@ -14,6 +14,6 @@ app.get('/', (request, response) => {
   response.send();
 });
 
-app.post('/user', userRoutes);
+app.use('/user', userRoutes);
 
 app.use(errorMiddleware);

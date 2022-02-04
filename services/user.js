@@ -1,6 +1,7 @@
 const Joi = require('joi');
 const errorHandler = require('../middlewares/errorHandler');
 const { User } = require('../models');
+const generateJwt = require('../utils/generateJwt');
 
 const userSchema = Joi.object({
   displayName: Joi.string().min(8),
@@ -21,9 +22,11 @@ const createUser = async ({ displayName, password, email, image }) => {
   const exists = await alreadyExists(email);
   if (exists) throw errorHandler(409, 'User already registered');
 
-  const userCreated = await User.create({ displayName, password, email, image });
+  const token = generateJwt({ displayName, password, email, image });
 
-  return userCreated;
+  await User.create({ displayName, password, email, image });
+
+  return token;
 };
 
 module.exports = {
