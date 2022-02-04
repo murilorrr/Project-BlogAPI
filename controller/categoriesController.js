@@ -11,6 +11,16 @@ const createOneCategory = async (req, res, next) => {
   }
 };
 
+const getAll = async (req, res, next) => {
+  try {
+    const result = await categoryService.getAll();
+    return res.status(StatusCodes.OK).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   createOneCategory,
+  getAll,
 };

@@ -8,9 +8,7 @@ router.delete('/:id', (req, res) => {
  res.status(404).json({ message: 'not implemented' });
 });
 
-router.get('/', (req, res) => {
-  res.status(200).json({ message: 'not implemented' });
-});
+router.get('/', authMiddleware, categoriesController.getAll);
 
 router.post('/', authMiddleware, categoriesController.createOneCategory);
 
