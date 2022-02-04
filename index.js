@@ -1,8 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { StatusCodes } = require('http-status-codes');
 const errorMiddleware = require('./middlewares/errorMiddleware');
-const userService = require('./services/user');
+const userRoutes = require('./routes/userRoutes');
 
 const app = express();
 app.use(bodyParser.json());
@@ -15,14 +14,6 @@ app.get('/', (request, response) => {
   response.send();
 });
 
-app.post('/user', async (req, res, next) => {
-  const user = req.body;
-  try {
-    const result = await userService.createUser(user);
-    return res.status(StatusCodes.CREATED).json(result);
-  } catch (error) {
-    next(error);
-  }
-});
+app.post('/user', userRoutes);
 
 app.use(errorMiddleware);
