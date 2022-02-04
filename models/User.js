@@ -1,4 +1,3 @@
-// eslint-disable-next-line max-lines-per-function
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
     displayName: {
@@ -27,6 +26,6 @@ module.exports = (sequelize, DataTypes) => {
     User.hasMany(models.BlogPost,
       { foreignKey: 'id', as: 'blogpost' });
   };
-  
+
   return User;
 };
