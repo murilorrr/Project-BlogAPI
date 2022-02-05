@@ -1,27 +1,12 @@
-const objUser = (DataTypes) => ({
-  displayName: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  email: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    unique: true,
-  },
-  password: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  image: {
-    type: DataTypes.STRING,
-  },
-});
-
-module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define('User', objUser(DataTypes), {
-    timestamps: false, // remove a obrigatoriedade de utilizar os campos `createdAt` e `updatedAt`
-    tableName: 'Users',
-    underscored: false,
+const User = (sequelize, DataTypes) => {
+  const UserTable = sequelize.define('User', {
+    displayName: DataTypes.STRING,
+    email: DataTypes.STRING,
+    password: DataTypes.STRING,
+    image: DataTypes.STRING,
+  }, 
+    {
+      timestamps: false,
   });
 
   User.associate = (models) => {
@@ -29,5 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       { foreignKey: 'id', as: 'blogpost' });
   };
 
-  return User;
+  return UserTable;
 };
+
+module.exports = User;
