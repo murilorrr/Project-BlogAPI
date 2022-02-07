@@ -7,8 +7,12 @@ module.exports = (sequelize, DataTypes) => {
   },
   {
     timestamps: false, // remove a obrigatoriedade de utilizar os campos `createdAt` e `updatedAt`
-    tableName: 'Category',
-    underscored: false,
   });
+
+  // Category.associate = (models) => {
+    //   Category.hasMany(models.PostCategory,
+    //   { foreignKey: 'categoryId', as: 'posts' });
+    // };
+
   return Category;
 };

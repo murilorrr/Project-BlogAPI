@@ -7,7 +7,6 @@ const secret = process.env.JWT_SECRET || 'segredinho';
 const authMiddleware = (req, res, next) => {
   const { authorization } = req.headers;
   try {
-    console.log(req.headers.authorization);
     JWT.verify(authorization, secret);
   } catch (err) {
     if (!authorization) throw myError(status.UNAUTHORIZED, 'Token not found');
