@@ -3,7 +3,6 @@ const loginService = require('../services/loginService');
 
 const postLogin = async (req, res, next) => {
   const user = req.body;
-  console.log(user, '_______________USER');
   try {
     const result = await loginService.postLogin(user);
     return res.status(StatusCodes.OK).json({ token: result });
