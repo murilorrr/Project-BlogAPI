@@ -1,8 +1,7 @@
 const JOI = require('joi');
 const { StatusCodes } = require('http-status-codes');
-const { BlogPost } = require('../models');
 const errorHandler = require('../middlewares/errorHandler');
-const { Category } = require('../models');
+const { Category, User, BlogPost } = require('../models');
 
 const PostSchema = JOI.object({
   title: JOI.string().required(),
@@ -26,12 +25,39 @@ const createOne = async ({ title, content, categoryIds, userId }) => {
   return categorie;
 };
 
-// const getAll = async () => {
-//   const categories = await Categories.findAll();
-//   return categories;
-// };
+const getAll = async () => {
+  try {
+    const result = await BlogPost.findAll({
+      // include: [
+      //   { model: User, as: 'user' },
+      //   { model: Category, as: 'category' },
+      // ]
+    });
+    return result;
+  } catch (err) {
+    return console.log(err);
+  }
+};
+
+const deleteOne = async (id, user) => {
+  const exists = await BlogPost.findOne({ where: { id } });
+    if (!exists) throw errorHandler(StatusCodes.NOT_FOUND, 'Post does not exist');
+
+    const userFind = await User.findOne({ where: { email: user.email } });
+
+    if (userFind.id !== exists.userId) {
+    throw errorHandler(StatusCodes.UNAUTHORIZED, 'Unauthorized user');
+    }
+  try {
+    const result = await BlogPost.destroy({ where: { id } });
+    return result;
+  } catch (err) {
+    throw new Error(err.message);
+  }
+};
 
 module.exports = {
   createOne,
-  // getAll,
+  getAll,
+  deleteOne,
 };

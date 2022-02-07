@@ -17,6 +17,28 @@ const createOne = async (req, res, next) => {
   }
 };
 
+const getAll = async (req, res, next) => {
+  try {
+    const result = await postService.getAll();
+    return res.status(StatusCodes.OK).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const deleteOne = async (req, res, next) => {
+  const { user } = await req;
+
+  try {
+    await postService.deleteOne(req.params.id, user);
+    res.status(StatusCodes.NO_CONTENT).json({});
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   createOne,
+  getAll,
+  deleteOne,
 };

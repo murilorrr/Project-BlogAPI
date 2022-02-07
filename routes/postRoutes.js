@@ -4,13 +4,9 @@ const postController = require('../controller/postController');
 const router = new Router();
 const authMiddleware = require('../middlewares/TokenAuthMiddleware');
 
-router.delete('/:id', (req, res) => {
-  res.status(404).json({ message: 'not implemented' });
- });
+router.delete('/:id', authMiddleware, postController.deleteOne);
  
- router.get('/', (req, res) => {
-   res.status(200).json({ message: 'not implemented' });
- });
+ router.get('/', postController.getAll);
  
  router.post('/', authMiddleware, postController.createOne);
  
