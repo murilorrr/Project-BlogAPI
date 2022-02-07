@@ -3,6 +3,7 @@ const { StatusCodes } = require('http-status-codes');
 const errorHandler = require('../middlewares/errorHandler');
 const { User } = require('../models');
 const generateJwt = require('../utils/generateJwt');
+const decode = require('../utils/decodedJWT');
 
 const userSchema = Joi.object({
   displayName: Joi.string().min(8),
@@ -41,8 +42,22 @@ const getById = async (id) => {
   return user;
 };
 
+const deleteOne = async (token) => {
+  // decode
+  
+  const user = decode(token);
+
+  try {
+    const result = await User.destroy({ where: { email: user.email } });
+    return result;
+  } catch (err) {
+    throw new Error(err.message);
+  }
+};
+
 module.exports = {
   createUser,
   getAll,
   getById,
+  deleteOne,
 };
