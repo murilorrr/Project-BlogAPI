@@ -29,8 +29,11 @@ const getAll = async () => {
   try {
     const result = await BlogPost.findAll({
       // include: [{ all: true }],
-      include: [{ model: User, as: 'user' },
-      { model: Category, as: 'category' }],
+      include: [
+        { model: Category, as: 'categories', through: { attributes: [] } },
+        { model: User, as: 'user' },
+      ],
+      // include: [{ model: User, as: 'user' }],
     });
     return result;
   } catch (err) {
