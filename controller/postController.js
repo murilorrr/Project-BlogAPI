@@ -36,6 +36,18 @@ const getById = async (req, res, next) => {
   }
 };
 
+const updateById = async (req, res, next) => {
+  const { id } = req.params;
+  const post = req.body;
+  const { user } = await req;
+  try {
+    const result = await postService.updateById(id, post, user);
+    return res.status(StatusCodes.OK).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
 const deleteOne = async (req, res, next) => {
   const { user } = await req;
 
@@ -52,4 +64,5 @@ module.exports = {
   getAll,
   deleteOne,
   getById,
+  updateById,
 };
