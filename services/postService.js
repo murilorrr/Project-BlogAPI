@@ -41,6 +41,20 @@ const getAll = async () => {
   }
 };
 
+const getById = async (id) => {
+    const result = await BlogPost.findOne({
+    // include: [{ all: true }],
+    where: { id },
+    include: [
+      { model: Category, as: 'categories', through: { attributes: [] } },
+      { model: User, as: 'user' },
+    ],
+    // include: [{ model: User, as: 'user' }],
+  });
+  if (!result) throw errorHandler(404, 'Post does not exist');
+  return result;
+};
+
 const deleteOne = async (id, user) => {
   const exists = await BlogPost.findOne({ where: { id } });
     if (!exists) throw errorHandler(StatusCodes.NOT_FOUND, 'Post does not exist');
@@ -62,4 +76,5 @@ module.exports = {
   createOne,
   getAll,
   deleteOne,
+  getById,
 };
