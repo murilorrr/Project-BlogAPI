@@ -24,14 +24,13 @@ const createOne = async ({ title, content, categoryIds, userId }) => {
   const categorie = await BlogPost.create({ title, content, userId });
   return categorie;
 };
-
+// , through: { attributes: [] }
 const getAll = async () => {
   try {
     const result = await BlogPost.findAll({
-      // include: [
-      //   { model: User, as: 'user' },
-      //   { model: Category, as: 'category' },
-      // ]
+      // include: [{ all: true }],
+      include: [{ model: User, as: 'user' },
+      { model: Category, as: 'category' }],
     });
     return result;
   } catch (err) {

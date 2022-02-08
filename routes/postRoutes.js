@@ -6,7 +6,7 @@ const authMiddleware = require('../middlewares/TokenAuthMiddleware');
 
 router.delete('/:id', authMiddleware, postController.deleteOne);
  
- router.get('/', postController.getAll);
+ router.get('/', authMiddleware, postController.getAll);
  
  router.post('/', authMiddleware, postController.createOne);
  

@@ -4,15 +4,12 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    id: { primaryKey: true, autoIncrement: true, type: DataTypes.INTEGER },
   },
   {
+    tableName: 'Categories',
     timestamps: false, // remove a obrigatoriedade de utilizar os campos `createdAt` e `updatedAt`
   });
-
-  // Category.associate = (models) => {
-    //   Category.hasMany(models.PostCategory,
-    //   { foreignKey: 'categoryId', as: 'posts' });
-    // };
 
   return Category;
 };
