@@ -26,8 +26,8 @@ Onde teve como desafio desenvolver varias API utilizando nodeJs e Express de for
 
  # 👷 Como rodar
 
-```bash
-# *É necessário ter o node e git instalado*
+```bash 
+# *É necessário ter o node e git instalado* este link pode ajudar "https://nodejs.org/pt-br/download/package-manager/"
 # Clonar o repositório com: #git clone https://github.com/murilorsv14/WebScrapping-Wether.git
 # Entrar numa IDE de sua preferência 
 # npm install para instalar dependencias
